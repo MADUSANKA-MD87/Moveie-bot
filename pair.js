@@ -69,11 +69,11 @@ const config = {
       '120363419802728983@newsletter'//Vajira ofc
       ],
   OTP_EXPIRY: 300000,
-  OWNER_NUMBER: process.env.OWNER_NUMBER || '94752978237','94743387798'
-  CHANNEL_LINK: 'https://whatsapp.com/channel/0029Vb7Lf8I9sBI8QXTIZv1P',
+  OWNER_NUMBER: process.env.OWNER_NUMBER ? process.env.OWNER_NUMBER.split(',') : ['94752978237','94743387798'],
+  CHANNEL_LINK: 'https://whatsapp.com/channel/0029Vb7p3UCCHDyocfEGm23f',
   BOT_NAME: ' _© ༺ ALONE X MD MOVIE BOT༻ || 🎬_',
   BOT_VERSION: '1.0.0V',
-  OWNER_NAME: '☠ 𝙼𝙰𝙳𝚄𝚂𝙰𝙽𝙺𝙰,ᴅᴄᴛ ᴅᴜʟᴀ ᴅᴇᴠ </> ☠︎︎�',
+  OWNER_NAME: '☠ 𝙼𝙰𝙳𝚄𝚂𝙰𝙽𝙺𝙰,ᴅᴄᴛ ᴅᴜʟᴀ ᴅᴇᴠ </> ☠︎︎',
   IMAGE_PATH: 'https://i.ibb.co/Xf97VRG6/2c8d51c08f75.jpg',
   BOT_FOOTER: '> * _© ༺ ALONE X MD MOVIE BOT༻ || 🎬_*',
   ERROR: 'http://raw.githubusercontent.com/dct-dula/database/refs/heads/main/error.png',
@@ -106,7 +106,6 @@ const config = {
     MOVIE_MODE: 'public'
   }
 };
-
 // Helper to safely access primary owner number and owner JIDs
 const getPrimaryOwnerNumber = () => {
   return Array.isArray(config.OWNER_NUMBER) ? String(config.OWNER_NUMBER[0]) : String(config.OWNER_NUMBER);
