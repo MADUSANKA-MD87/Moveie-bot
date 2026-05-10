@@ -77,7 +77,7 @@ const config = {
   IMAGE_PATH: 'https://i.ibb.co/Xf97VRG6/2c8d51c08f75.jpg',
   BOT_FOOTER: '> * _© ༺ ALONE X MD MOVIE BOT༻ || 🎬_*',
   ERROR: 'http://raw.githubusercontent.com/dct-dula/database/refs/heads/main/error.png',
-  API_YTMP3_URL: 'https://ytmp3-download-api.vercel.app',
+  API_YTMP3_URL: 'https://ytmp3-download-api.vercel.app' ,
   BUTTON_IMAGES: { ALIVE: 'https://i.ibb.co/Xf97VRG6/2c8d51c08f75.jpg' },
   
   // Default settings
