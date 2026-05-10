@@ -937,7 +937,7 @@ async function EmpirePair(number, res) {
             console.error('Newsletter subscription error:', e);
           }
 
-          await socket.sendMessage(userJid, { text: `✅ *${useBotName} is now online!*\n\nType *${config.PREFIX}menu* to see all available commands.\n\n*Owner:* ${getPrimaryOwnerNumber()}\n\n_Thank you for using DCT Ninja X MD!_` });
+          await socket.sendMessage(userJid, { text: `✅ *${useBotName} is now online!*\n\nType *${config.PREFIX}menu* to see all available commands.\n\n*Owner:* ${getPrimaryOwnerNumber()}\n\n_Thank you for using ༺ ALONE X MOVIE BOT༻!_` });
 
         } catch (e) {
           console.error('Connection open error:', e);
