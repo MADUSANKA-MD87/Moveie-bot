@@ -70,7 +70,7 @@ const config = {
       ],
   OTP_EXPIRY: 300000,
   OWNER_NUMBER: process.env.OWNER_NUMBER || '94752978237','94743387798'
-  CHANNEL_LINK: 'https://whatsapp.com/channel/0029Vb7p3UCCHDyocfEGm23f',
+  CHANNEL_LINK: 'https://whatsapp.com/channel/0029Vb7p3UCCHDyocfEGm23f'
   BOT_NAME: ' _© ༺ ALONE X MD MOVIE BOT༻ || 🎬_',
   BOT_VERSION: '1.0.0V',
   OWNER_NAME: '☠ 𝙼𝙰𝙳𝚄𝚂𝙰𝙽𝙺𝙰,ᴅᴄᴛ ᴅᴜʟᴀ ᴅᴇᴠ </> ☠︎︎�',
