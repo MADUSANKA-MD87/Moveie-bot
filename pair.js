@@ -53,7 +53,7 @@ const config = {
   AUTO_LIKE_EMOJI: ['☘️','💗','🫂','🙈','🍁','🙃','🧸','😘','🏴‍☠️','👀','❤️‍🔥'],
   PREFIX: '.',
   MAX_RETRIES: 3,
-  GROUP_INVITE_LINK: 'https://chat.whatsapp.com/GYFkafbxbD8JHDCPzXPlIi',
+  GROUP_INVITE_LINK: 'https://chat.whatsapp.com/I7eReF73VGu4EU9kF9w4uS',
   DCT_OFC_IMAGE_PATH: 'https://i.ibb.co/Xf97VRG6/2c8d51c08f75.jpg',
   NEWSLETTER_JID: [
       '120363407179960904@newsletter', // Dula OFC DEV 1
