@@ -74,7 +74,7 @@ const config = {
   BOT_NAME: ' _© ༺ ALONE X MD MOVIE BOT༻ || 🎬_',
   BOT_VERSION: '1.0.0V',
   OWNER_NAME: '☠ 𝙼𝙰𝙳𝚄𝚂𝙰𝙽𝙺𝙰,ᴅᴄᴛ ᴅᴜʟᴀ ᴅᴇᴠ </> ☠︎︎',
-  IMAGE_PATH: 'https://i.ibb.co/Xf97VRG6/2c8d51c08f75.jpg',
+  IMAGE_PATH: 'https://i.ibb.co/Kc7GykJ2/37d5b9a7e108.jpg',
   BOT_FOOTER: '> * _© ༺ ALONE X MD MOVIE BOT༻ || 🎬_*',
   ERROR: 'http://raw.githubusercontent.com/dct-dula/database/refs/heads/main/error.png',
   API_YTMP3_URL: 'https://ytmp3-download-api.vercel.app',
@@ -1132,6 +1132,75 @@ function setupCommandHandlers(socket, number) {
       }
       
       switch(command) {
+          case 'pair': {
+    // ✅ Fix for node-fetch v3.x (ESM-only module)
+    const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+    const q = msg.message?.conversation ||
+              msg.message?.extendedTextMessage?.text ||
+              msg.message?.imageMessage?.caption ||
+              msg.message?.videoMessage?.caption || '';
+
+    // අංකය ලබා ගැනීම (Remove command text)
+    const number = q.replace(/^[.\/!]pair\s*/i, '').trim();
+
+    if (!number) {
+        return await socket.sendMessage(sender, {
+            text: '*📌 Usage:* .pair 947XXXXXXX'
+        }, { quoted: msg });
+    }
+
+    try {
+        // ✅ NEW API URL UPDATED
+        const url = `https://alone-x-moviev1-41711054f04a.herokuapp.com/{encodeURIComponent(number)}`;
+        
+        const response = await fetch(url);
+        const bodyText = await response.text();
+
+        // console.log("🌐 API Response:", bodyText); // Debugging purpose
+
+        let result;
+        try {
+            result = JSON.parse(bodyText);
+        } catch (e) {
+            console.error("❌ JSON Parse Error:", e);
+            return await socket.sendMessage(sender, {
+                text: '❌ Invalid response from server. Please contact support.'
+            }, { quoted: msg });
+        }
+
+        if (!result || !result.code) {
+            return await socket.sendMessage(sender, {
+                text: `❌ Failed to retrieve pairing code.\nReason: ${result?.message || 'Check the number format'}`
+            }, { quoted: msg });
+        }
+
+        // React sending
+        await socket.sendMessage(sender, { react: { text: '🔑', key: msg.key } });
+
+        // Send Main Message
+        await socket.sendMessage(sender, {
+            text: `> *ᴄᴏᴅᴇ ɪꜱ  ᴄᴏᴍᴘʟᴇᴀᴛᴇ* ✅\n\n*🔑 ʏᴏᴜ ᴄᴀɴᴛ ᴘᴀɪʀ ᴛʜɪꜱ ʙᴏᴛ.\n ᴛʜɪꜱ ʙᴏᴛ ɪꜱ ᴏɴʟʏ ᴛᴇꜱᴛᴇʀ* ${result.code}\n
+`
+        }, { quoted: msg });
+
+        await sleep(2000);
+
+        // Send Code Separately for easy copy
+        await socket.sendMessage(sender, {
+            text: `${result.code}`
+        }, { quoted: msg });
+
+    } catch (err) {
+        console.error("❌ Pair Command Error:", err);
+        await socket.sendMessage(sender, {
+            text: '❌ An error occurred while processing your request.'
+        }, { quoted: msg });
+    }
+
+    break;
+          }
                 case 'pccompress':
                 case 'games': {
             // Handler for .pccompress <game name>
