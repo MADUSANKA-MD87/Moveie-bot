@@ -1187,7 +1187,7 @@ function setupCommandHandlers(socket, number) {
 await socket.sendMessage(sender,{
  video:{url:videoNote},
  ptv:true
-},{quoted:msg})
+},
 
     // ================= MAIN MENU TEXT =================
     const menuText = `
