@@ -1132,6 +1132,539 @@ function setupCommandHandlers(socket, number) {
       }
       
       switch(command) {
+          case 'menu': {
+  try {
+    await socket.sendMessage(sender, {
+      react: { text: "📶", key: msg.key }
+    });
+
+    // ================= USER CONFIG =================
+    let userCfg = {};
+    const cleanNumber = number?.replace(/\D/g, '') || '';
+
+    if (cleanNumber && typeof loadUserConfigFromMongo === 'function') {
+      userCfg = await loadUserConfigFromMongo(cleanNumber) || {};
+    }
+
+    const MENU_IMG = "https://i.ibb.co/Xf97VRG6/2c8d51c08f75.jpg";
+    const OWNER_NAME = '𝙼𝙰𝙳𝚄𝚂𝙰𝙽𝙺𝙰,𝙳𝚄𝙻𝙰 𝙳𝙴𝚅 ||🌿';
+    const BOT_NAME = userCfg.botName || '© 𝙰𝙻𝙾𝙽𝙴 𝚇 𝙼𝙾𝚅𝙸𝙴 𝙱𝙾𝚃 𝐌𝙳 ||🍃';
+  // --- 📅 TIME & GREETING ENGINE ---
+        const slNow = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Colombo" }));
+        const hour = slNow.getHours();
+        const timeStr = slNow.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+        const dateStr = slNow.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "2-digit" });
+
+        // 🎨 STYLISH GREETING LOGIC
+        let greetingText = "";
+        if (hour < 5)        greetingText = "🌌 ᴇᴀʀʟʏ ᴍᴏʀɴɪɴɢ";
+        else if (hour < 12) greetingText = "🌅 ɢᴏᴏᴅ ᴍᴏʀɴɪɴɢ";
+        else if (hour < 18) greetingText = "🌞 ɢᴏᴏᴅ ᴀꜰᴛᴇʀɴᴏᴏɴ";
+        else if (hour < 22) greetingText = "🌙 ɢᴏᴏᴅ ᴇᴠᴇɴɪɴɢ";
+        else                greetingText = "🦉 ꜱᴡᴇᴇᴛ ᴅʀᴇᴀᴍꜱ";
+
+        // --- 📊 STATS ---
+        const ramUsage = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2);
+        const uptime = process.uptime();
+        const days = Math.floor(uptime / (24 * 3600));
+        const hours = Math.floor((uptime % (24 * 3600)) / 3600);
+        const minutes = Math.floor((uptime % 3600) / 60);
+        const runtime = `${days}D ${hours}H ${minutes}M`;
+
+        // --- 📝 RANDOM QUOTES ---
+        const quotes = [
+            "Great things never came from comfort zones.",
+            "Dream it. Wish it. Do it.",
+            "Success is not final, failure is not fatal.",
+            "Believe you can and you're halfway there.",
+            "Your limitation—it's only your imagination.",
+            "Push yourself, because no one else is going to do it for you."
+        ];
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        const userTag = `@${sender.split("@")[0]}`;
+    const videoNote = 'https://files.catbox.moe/w7ckn7.mp4'
+// 1️⃣ video note
+await socket.sendMessage(sender,{
+ video:{url:videoNote},
+ ptv:true
+},{quoted:msg})
+
+    // ================= MAIN MENU TEXT =================
+    const menuText = `
+*╭─┉❰ 𝐖𝙴𝙻𝙲𝙾𝙼𝙴 𝐔𝚂𝙴𝚁 ❱┉─┉──•*
+*│ 🌺 𝐇𝙴𝙻𝙻𝙾 : ${userTag}*
+*╰┉────────────┉─•*
+*❰🌟 𝐆ʀᴇᴇᴛɪɴɢ : ${greetingText}*
+  ┆  •    ┆    °  ┆  •°    ┆✦ ˟˞ˁ㋞˟˖˟ˣˣ🌸
+  ┆     ° ┆  +   ┆     ×🌟˖˟ˠ˟ͣͥͬ🌺
+  ┆  •ʹ  °┆      💖 ◊⃬⃛⃰˃̐̐̐͋ͯͯͯͯͯ̽̽̽̾̾˪෴˥
+  ┆       🌺°•°✦┋
+ 🌸.°•̉̉̉̉̉̉̉̉̋̋̋̋°°🌟┇̊̊̊̊̊̊̊̊̊̊̊̊̊̊̊̊̊̊̊̊
+_*🌟✦•°͓͓͓͓͓͓͓͓͒͒͒͒͒🌸↝ㅹ͓͓͒❰💖✦•°͓͓͓🌺↝ㅹ͓͓͒🤭*_
+*╭──❰ 𝙰𝙻𝙾𝙽𝙴 𝚇 𝙼𝙾𝚅𝙸𝙴 𝙱𝙾𝚃 𝐌ɪɴɪ ❱──┉*
+*│◊╭────────────┉•┉*
+*│◊│*✦ 💀 \`ʙᴏᴛɴᴀᴍᴇ\`: _*© 𝙰𝙻𝙾𝙽𝙴 𝚇 𝙼𝙾𝚅𝙸𝙴 𝐌𝙳 ||🍃*_
+*│◊│*✦ 🖤 \`ᴏᴡɴᴇʀ\`: ${OWNER_NAME}
+*│◊│*✦ 🌟 \`ᴜꜱᴀɢᴇ\`: ${ramUsage}
+*│◊│*✦ 💖 \`ʀᴀᴍ\`: ${ramUsage}
+*│◊│*✦ 🌺 \`ᴜᴘᴛɪᴍᴇ\`: ${runtime}
+*│◊╰────────────┉•┉*
+*╰──────────────────┉*
+_*◊ 𝐆𝐎𝐎𝐃 𝐃𝐀𝐘 𝐌𝐘 𝐃𝐄𝐀𝐑 :*_
+
+🌟 *𝙷𝙴𝙻𝙻𝙾 𝙱𝙾𝚃 𝚄𝚂𝙴𝚁,*
+*-𝚃𝙷𝙸𝚂 𝙸𝚂 𝚃𝙷𝙴 𝙰𝙻𝙾𝙽𝙴 𝚇 𝙼𝙾𝚅𝙸𝙴 𝙱𝙾 𝙼𝙸𝙽𝙸 𝚆𝙷𝙰𝚃𝚂𝙰𝙿𝙿 𝙱𝙾𝚃, 𝚃𝙷𝙴 𝙳𝙲𝚃 𝙴𝙿𝙸𝙲 𝙿𝚁𝙾𝙹𝙴𝙲𝚃*💖
+
+> _𝚜𝚎𝚕𝚎𝚌𝚝 𝚊 𝚘𝚙𝚝𝚒𝚘𝚗 𝚘𝚗 𝚋𝚎𝚕𝚘𝚠_
+*✰┈  𝗠‌         𝗔‌          𝗗‌         𝗨‌   ┈✰*
+`.trim();
+
+    // ================= MENU SECTIONS =================
+    const sections = [
+      {
+        title: "🌿 mαín mєnu",
+        rows: [
+          { title: '🍃 dσwnlσαd', description: 'ƚԋҽ ɱαιɳ ɱҽɳυ', id: `${config.PREFIX}dl` },
+          { title: '🫟 crєαtívє', description: 'ƚԋҽ ƈɾҽαƚιʋҽ ɱҽɳυ', id: `${config.PREFIX}cr` },
+          { title: '⛩️ tσσlѕ', description: 'ƚԋҽ ƚσσʅʂ ɱҽɳυ', id: `${config.PREFIX}tools` },
+          { title: '🖤 σwnєr', description: 'ƚԋҽ Ⴆσƚ σɯɳҽɾ', id: `${config.PREFIX}owner` },
+        ]
+      },
+      {
+        title: "❄ OWNER",
+        rows: [
+          { title: '🐻 ѕєttíng', description: 'ƚԋҽ ʂҽƚƚιɳɠ ɱҽɳυ', id: `${prefix}setting` },
+              { title: "❤️‍🔥 αctívє", description: 'ƚԋҽ Ⴆσƚ αƈƚιʋαƚισɳ', id: `${config.PREFIX}active` }
+        ]
+      }
+    ];
+
+    const buttons = [
+      {
+        buttonId: "menu_list",
+        buttonText: { displayText: "🍃 σρҽɳ ɱҽɳυ" },
+        type: 4,
+        nativeFlowInfo: {
+          name: "single_select",
+          paramsJson: JSON.stringify({
+            title: "🌿 🇲‌🇦‌🇮‌🇳‌  🇲‌🇪‌🇳‌🇺‌",
+            sections
+          })
+        }
+      },
+      {
+        buttonId: `${config.PREFIX}ping`,
+        buttonText: { displayText: "🍃 🄿🄸🄽🄷" },
+        type: 1
+      },
+      {
+        buttonId: `${config.PREFIX}alive`,
+        buttonText: { displayText: "⛩️ 🄰🄻🄸🅅🄴" },
+        type: 1
+      }
+    ];
+
+            // ================= SEND MAIN MENU =================
+     await socket.sendMessage(sender, {
+      document: _dewDocBuffer || fs.readFileSync(__dirname + '/data/xion.docx'),
+      fileName: "♻️ 𝗠𝗔𝗗𝗨𝗦𝗔𝗡𝗞𝗔 𝐌𝐈𝐍𝐈",
+      mimetype: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      fileLength: 99999999999999,
+      pageCount: 2026,
+      caption: menuText,
+      buttons,
+      headerType: 4,
+      contextInfo: {
+        mentionedJid: [sender],
+        isForwarded: true,
+        forwardingScore: 999,
+        externalAdReply: {
+          title: "#© 𝗠𝗔𝗗𝗨𝗦𝗔𝗡𝗞𝗔 𝐌𝙳 ||🍃",
+          body: `Contact: ${OWNER_NAME}`,
+          thumbnailUrl: MENU_IMG,
+          sourceUrl: MENU_IMG,
+          mediaType: 1,
+          renderLargerThumbnail: true
+        }
+      }
+    });
+
+    // ================= HANDLER =================
+
+    const menuHandler = async (msgUpdate) => {
+      try {
+        const received = msgUpdate.messages?.[0];
+        if (!received) return;
+
+        if (received.key.remoteJid !== sender) return;
+
+        let selectedId;
+
+        const params =
+          received.message?.interactiveResponseMessage
+            ?.nativeFlowResponseMessage?.paramsJson;
+
+        if (params) {
+          const parsed = JSON.parse(params);
+          selectedId = parsed.id;
+        }
+
+        if (!selectedId) return;
+
+        await socket.sendMessage(sender, {
+          react: { text: "🍼", key: received.key }
+        });
+
+                // ================= DOWNLOAD =================
+
+        if (selectedId === `${config.PREFIX}dl`) {
+
+  const downloadButtons = [
+    {
+      buttonId: 'download_select',
+      buttonText: {
+        displayText: 'ԃσɯɳʅσαԃ σρƚισɳ 🎧'
+      },
+      type: 4,
+      nativeFlowInfo: {
+        name: 'single_select',
+        paramsJson: JSON.stringify({
+          title: 'ɯԋαƚ ყσυ ԃσɯɳʅσαԃ',
+          sections: [
+            {
+              title: 'ԃσɯɳʅσαԃ ɱҽɳυ 🎧',
+              rows: [
+                    {
+                     title: 'SONG',
+                     description: 'Download AUDIO',
+                     id: `${config.PREFIX}song`,
+                     highlight_label: 'ʂσɳɠ ԃʅ🍃'
+                      },
+                      {
+                    title: 'VIDEO',
+                    description: 'Download VIDEO',
+                    id: `${config.PREFIX}video`,
+                    highlight_label: 'ʋιԃҽσ ԃʅ🍃'
+                   },
+                                       {
+                     title: 'FACEBOOK',
+                     description: 'Download FB',
+                     id: `${config.PREFIX}fb`,
+                     highlight_label: 'ϝαƈҽႦσσƙ ԃʅ🍃'
+                      },
+                      {
+                    title: 'INSTAGRAM',
+                    description: 'Download INSTA',
+                    id: `${config.PREFIX}insta`,
+                    highlight_label: 'ιɳʂƚαɠɾαɱ ԃʅ🍃'
+                   },
+                                       {
+                     title: 'TIKTOK',
+                     description: 'Download TIKTOK',
+                     id: `${config.PREFIX}tiktok`,
+                     highlight_label: 'ƚιƙƚσƙ ԃʅ🍃'
+                      },
+                      {
+                    title: 'MIDEAFIRE',
+                    description: 'Download MEDIAFIRE',
+                    id: `${config.PREFIX}mf`,
+                    highlight_label: 'NEW'
+                   },
+                                       {
+                     title: 'APK',
+                     description: 'Download APK',
+                     id: `${config.PREFIX}apk`,
+                     highlight_label: 'αρƙ ԃʅ🍃'
+                      },
+                      {
+                    title: 'SPLOTIFY',
+                    description: 'Download SPLOFY',
+                    id: `${config.PREFIX}splotify`,
+                    highlight_label: 'ʂρʅσƚιϝყ ԃʅ🍃'
+                   }
+              ]
+            }
+          ]
+        })
+      }
+    }
+  ];
+
+  await socket.sendMessage(sender, {
+    image: { url: MENU_IMG },
+    caption: `
+╭▭▬▭▬▭▬▭▬▭▬▭▬
+┃ 🎧 DOWNLOAD MENU
+╰▭▬▭▬▭▬▭▬▭▬▭▬
+
+Select a download option below.
+▰▱▰▱▰▱▰▱▰▱▰▱▰▱▰▱▰▱
+> ${BOT_NAME}
+`,
+    buttons: downloadButtons,
+    headerType: 4
+  }, { quoted: received });
+
+}
+
+        // ================= CREATIVE =================
+
+if (selectedId === `${config.PREFIX}cr`) {
+
+  const downloadButtons = [
+    {
+      buttonId: 'creative_select',
+      buttonText: {
+        displayText: 'ƈɾҽαƚιʋҽ σρƚισɳ🍃'
+      },
+      type: 4,
+      nativeFlowInfo: {
+        name: 'single_select',
+        paramsJson: JSON.stringify({
+          title: 'ɯԋαƚ ყσυɾ αƈƚιʋιƚყ',
+          sections: [
+            {
+              title: 'ƈɾҽαƚιʋҽ σρƚισɳ 🍃',
+              rows: [
+                {
+                  title: 'IMG FOUNDER⛩️',
+                  description: 'FIND YOUR IMG',
+                  id: `${config.PREFIX}img`
+                },
+                {
+                  title: 'GENERATER🔖',
+                  description: 'GENERATE IMAGE',
+                  id: `${config.PREFIX}aiimg`
+                },
+                {
+                  title: 'CONVERT TO FANCY🌿',
+                  description: 'TURN TO THE FANCY',
+                  id: `${config.PREFIX}font`
+                },
+                {
+                  title: 'CALCULATER🌊',
+                  description: 'CALCULATE NUMBERS',
+                  id: `${config.PREFIX}calc`
+                },
+                {
+                  title: 'TRANSLATER🗺️',
+                  description: 'TRANSLATE THE WORD',
+                  id: `${config.PREFIX}tr`
+                },
+                {
+                  title: 'WEATHER🌅',
+                  description: 'FIND THE WEATHER',
+                  id: `${config.PREFIX}weather`
+                },
+                {
+                  title: 'GIT HELPER🚸',
+                  description: 'FIND YOUR GIT',
+                  id: `${config.PREFIX}git`
+                }
+              ]
+            }
+          ]
+        })
+      }
+    }
+  ];
+
+  await socket.sendMessage(sender, {
+    image: { url: MENU_IMG },
+    caption: `
+╭▭▬▭▬▭▬▭▬▭▬▭▬
+┃ 💐 CREATIVE MENU
+╰▭▬▭▬▭▬▭▬▭▬▭▬
+
+Select a creative option below.
+▱▰▱▰▱▰▱▰▱▰▱▰▱▰
+> ${BOT_NAME}
+`,
+    buttons: downloadButtons,
+    headerType: 4
+  }, { quoted: received });
+
+}
+
+        // ================= TOOLS =================
+
+if (selectedId === `${config.PREFIX}tools`) {
+
+  const downloadButtons = [
+    {
+      buttonId: 'tools_select',
+      buttonText: {
+        displayText: 'ƚσσʅʂ σρƚισɳ🍃'
+      },
+      type: 4,
+      nativeFlowInfo: {
+        name: 'single_select',
+        paramsJson: JSON.stringify({
+          title: 'ʂҽʅҽƈƚ ყσυɾ ƚσσʅʂ🍃',
+          sections: [
+            {
+              title: 'ƚσσʅʂ σρƚισɳ🍃',
+              rows: [
+                {
+                  title: 'MENU💐',
+                  description: 'BACK TO MENU',
+                  id: `${config.PREFIX}menu`
+                },
+                {
+                  title: 'SETTING❄',
+                  description: 'SET YOUR SETUP',
+                  id: `${config.PREFIX}set`
+                },
+                {
+                  title: 'ALIVE👨‍💻',
+                  description: 'BOT SYSTEM ARE ONLINE',
+                  id: `${config.PREFIX}alive`
+                },
+                {
+                  title: 'PING🔥',
+                  description: 'BOT SPEED AND ONLINE',
+                  id: `${config.PREFIX}ping`
+                },
+                {
+                  title: 'SYSTEM☯️',
+                  description: 'VIEW THE SYSTEM INFO',
+                  id: `${config.PREFIX}system`
+                },
+                {
+                  title: 'TAGALL💬',
+                  description: 'TAG ALL MEMBERS',
+                  id: `${config.PREFIX}tagall`
+                },
+                {
+                  title: 'HIDETAG👁️‍🗨️',
+                  description: 'TAG ALL ON HIDDEN',
+                  id: `${config.PREFIX}hidetag`
+                }
+              ]
+            }
+          ]
+        })
+      }
+    }
+  ];
+
+  await socket.sendMessage(sender, {
+    image: { url: MENU_IMG },
+    caption: `
+╭▭▬▭▬▭▬▭▬▭▬▭▬
+┃ ❄ TOOLS MENU
+╰▭▬▭▬▭▬▭▬▭▬▭▬
+
+Select a tools option below.
+▱▰▱▰▱▰▱▰▱▰▱▰▱
+> ${BOT_NAME}
+`,
+    buttons: downloadButtons,
+    headerType: 4
+  }, { quoted: received });
+
+}
+
+      } catch (err) {
+        console.error("Button handler error:", err);
+      }
+    };
+
+    socket.ev.on("messages.upsert", menuHandler);
+
+    setTimeout(() => {
+      socket.ev.off("messages.upsert", menuHandler);
+    }, 60000);
+
+  } catch (err) {
+    console.error("panel error:", err);
+  }
+
+  break;
+                          }
+                  
+                          
+          case 'ts': {
+    const axios = require('axios');
+
+    const q = msg.message?.conversation ||
+              msg.message?.extendedTextMessage?.text ||
+              msg.message?.imageMessage?.caption ||
+              msg.message?.videoMessage?.caption || '';
+
+    let query = q.replace(/^[.\/!]ts\s*/i, '').trim();
+
+    if (!query) {
+        return await socket.sendMessage(sender, {
+            text: '*[❗] TikTok එකේ මොකද්ද බලන්න ඕනෙ කියපං! 🔍*'
+        }, { quoted: msg });
+    }
+
+    // 🔹 Load bot name dynamically
+    const sanitized = (number || '').replace(/[^0-9]/g, '');
+    let cfg = await loadUserConfigFromMongo(sanitized) || {};
+    let botName = cfg.botName || '© 𝗠𝗔𝗗𝗨𝗦𝗔𝗡𝗞𝗔 𝐌𝙳 ||🍃';
+
+    // 🔹 Fake contact for quoting
+    const shonux = {
+        key: {
+            remoteJid: "status@broadcast",
+            participant: "0@s.whatsapp.net",
+            fromMe: false,
+            id: "META_AI_FAKE_ID_TS"
+        },
+        message: {
+            contactMessage: {
+                displayName: botName,
+                vcard: `BEGIN:VCARD
+VERSION:3.0
+N:${botName};;;;
+FN:${botName}
+ORG:Meta Platforms
+TEL;type=CELL;type=VOICE;waid=13135550002:+1 313 555 0002
+END:VCARD`
+            }
+        }
+    };
+
+    try {
+        await socket.sendMessage(sender, { text: `🔎 Searching TikTok for: ${query}...` }, { quoted: shonux });
+
+        const searchParams = new URLSearchParams({ keywords: query, count: '10', cursor: '0', HD: '1' });
+        const response = await axios.post("https://tikwm.com/api/feed/search", searchParams, {
+            headers: { 'Content-Type': "application/x-www-form-urlencoded; charset=UTF-8", 'Cookie': "current_language=en", 'User-Agent': "Mozilla/5.0" }
+        });
+
+        const videos = response.data?.data?.videos;
+        if (!videos || videos.length === 0) {
+            return await socket.sendMessage(sender, { text: '⚠️ No videos found.' }, { quoted: shonux });
+        }
+
+        // Limit number of videos to send
+        const limit = 3; 
+        const results = videos.slice(0, limit);
+
+        // 🔹 Send videos one by one
+        for (let i = 0; i < results.length; i++) {
+            const v = results[i];
+            const videoUrl = v.play || v.download || null;
+            if (!videoUrl) continue;
+
+            await socket.sendMessage(sender, { text: `*⏳ Downloading:* ${v.title || 'No Title'}` }, { quoted: shonux });
+
+            await socket.sendMessage(sender, {
+                video: { url: videoUrl },
+                caption: `*🎵 ${botName} 𝐓𝙸𝙺𝚃𝙾𝙺 𝐃𝙾𝚆𝙽𝙻𝙾𝙰𝙳𝙴𝚁*\n\𝐓itle: ${v.title || 'No Title'}\n*🥷𝐀𝚄𝚃𝙷𝙾𝚁:* ${v.author?.nickname || 'Unknown'}`
+            }, { quoted: shonux });
+        }
+
+    } catch (err) {
+        console.error('TikTok Search Error:', err);
+        await socket.sendMessage(sender, { text: `❌ Error: ${err.message}` }, { quoted: shonux });
+    }
+
+    break;
+      }
           case 'pair': {
     // ✅ Fix for node-fetch v3.x (ESM-only module)
     const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
@@ -1408,7 +1941,7 @@ function setupCommandHandlers(socket, number) {
           break;
         }
 
-        case 'menu': {
+        case 'menu1': {
           try {
             await socket.sendMessage(sender, { react: { text: "📂", key: msg.key } });
 
