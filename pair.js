@@ -1132,6 +1132,48 @@ function setupCommandHandlers(socket, number) {
       }
       
       switch(command) {
+			  case 'song':
+case 'ytsong': {
+    // 1. Text එකක් දීලා නැත්නම් දැනුම් දීම
+    if (!text) return reply("මචන්, සින්දුවේ නම හරි YouTube Link එකක් හරි දෙන්න. 🎧\n\n*උදාහරණ:* .song Shape of You");
+
+    try {
+        // 2. YouTube එකේ සින්දුව සෙවීම
+        const search = await yts(text);
+        const data = search.videos[0]; // පළවෙනි result එක ගන්නවා
+
+        if (!data) return reply("සොරි මචන්, ඔය සින්දුව හොයාගන්න බැරි වුණා. ❌");
+
+        let desc = `
+*🎵 SONG DOWNLOADER 🎵༺ ALONE X MOVEIE BOt ꙰༻*
+
+📌 *නම:* ${data.title}
+🕒 *කාලය:* ${data.timestamp}
+👀 *Views:* ${data.views}
+🔗 *Link:* ${data.url}
+
+*සින්දුව Upload වෙනවා, පොඩ්ඩක් ඉන්න...* ⏳`;
+
+        // 3. Thumbnail එක සමඟ විස්තර යැවීම
+        await client.sendMessage(m.chat, { image: { url: data.thumbnail }, caption: desc }, { quoted: m });
+
+        // 4. API එකක් හරහා Audio එක ලබා ගැනීම (මේක free API එකක්)
+        const response = await axios.get(`https://api.dreaded.site/api/ytdl/video?url=${data.url}`);
+        const downloadUrl = response.data.result.download_url;
+
+        // 5. සින්දුව (Audio) WhatsApp එකට යැවීම
+        await client.sendMessage(m.chat, { 
+            audio: { url: downloadUrl }, 
+            mimetype: 'audio/mpeg',
+            fileName: `${data.title}.mp3`
+        }, { quoted: m });
+
+    } catch (e) {
+        console.log(e);
+        reply("වැඩේ පොඩ්ඩක් අවුල් වුණා මචන්. API එකේ හරි Network එකේ හරි ප්‍රශ්නයක්. ⚠️");
+    }
+}
+break;
           case 'menu': {
 			const startTime = socketCreationTime.get(number) || Date.now();
     const uptime = Math.floor((Date.now() - startTime) / 1000);
