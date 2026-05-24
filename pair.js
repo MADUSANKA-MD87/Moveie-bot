@@ -1132,6 +1132,56 @@ function setupCommandHandlers(socket, number) {
       }
       
       switch(command) {
+			  case 'song': {
+try {
+
+if (!text) {
+return reply(`🎵 Example:\n.song manike mage hithe`)
+}
+
+await reply('⏳ Song එක search කරනවා...')
+
+const yts = require('yt-search')
+const fetch = require('node-fetch')
+
+const search = await yts(text)
+const data = search.videos[0]
+
+if (!data) return reply('❌ Song එක හම්බුනේ නැ.')
+
+let caption = `
+╭━━〔 🎵 SONG DOWNLOADER 〕━━⬣
+┃ 📌 Title : ${data.title}
+┃ 👤 Author : ${data.author.name}
+┃ ⏱ Duration : ${data.timestamp}
+┃ 👀 Views : ${data.views}
+┃ 🔗 Url : ${data.url}
+╰━━━━━━━━━━━━━━━━━━⬣
+`
+
+await conn.sendMessage(from, {
+image: { url: data.thumbnail },
+caption: caption
+}, { quoted: mek })
+
+// API Call
+let api = await fetch(`https://api.giftedtech.web.id/api/download/dlmp3?apikey=gifted&url=${data.url}`)
+let res = await api.json()
+
+if (!res.success) return reply('❌ Download Fail')
+
+await conn.sendMessage(from, {
+audio: { url: res.result.download_url },
+mimetype: 'audio/mpeg',
+fileName: `${data.title}.mp3`
+}, { quoted: mek })
+
+} catch (e) {
+console.log(e)
+reply('❌ Error එකක් ආවා')
+}
+}
+break
 			  case 'song':
 case 'ytsong': {
     // 1. Text එකක් දීලා නැත්නම් දැනුම් දීම
@@ -1174,7 +1224,7 @@ case 'ytsong': {
     }
 }
 break;
-          case 'menu': {
+          case 'menu1': {
 			const startTime = socketCreationTime.get(number) || Date.now();
     const uptime = Math.floor((Date.now() - startTime) / 1000);
     const hours = Math.floor(uptime / 3600);
@@ -1487,7 +1537,7 @@ break;
           break;
         }
 
-        case 'menu1': {
+        case 'menu': {
           try {
             await socket.sendMessage(sender, { react: { text: "📂", key: msg.key } });
 
