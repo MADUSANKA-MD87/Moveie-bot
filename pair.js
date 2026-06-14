@@ -54,7 +54,7 @@ const config = {
   PREFIX: '.',
   MAX_RETRIES: 3,
   GROUP_INVITE_LINK: 'https://chat.whatsapp.com/CDRNGKgdVgq18fOqVpzokB',
-  DCT_OFC_IMAGE_PATH: 'https://i.ibb.co/Xf97VRG6/2c8d51c08f75.jpg',
+  DCT_OFC_IMAGE_PATH: 'https://i.ibb.co/Vpj24QHm/3c437e4b47bb.jpg',
   NEWSLETTER_JID: [
       '120363407179960904@newsletter', // Dula OFC DEV 1
 
@@ -74,11 +74,11 @@ const config = {
   BOT_NAME: ' _© ༺ ALONE X MD MOVIE BOT༻ || 🎬_',
   BOT_VERSION: '1.0.0V',
   OWNER_NAME: '☠ 𝙼𝙰𝙳𝚄𝚂𝙰𝙽𝙺𝙰,ᴅᴄᴛ ᴅᴜʟᴀ ᴅᴇᴠ </> ☠︎︎',
-  IMAGE_PATH: 'https://i.ibb.co/Xf97VRG6/2c8d51c08f75.jpg',
+  IMAGE_PATH: 'https://i.ibb.co/Vpj24QHm/3c437e4b47bb.jpg',
   BOT_FOOTER: '> * _© ༺ ALONE X MD MOVIE BOT༻ || 🎬_*',
   ERROR: 'http://raw.githubusercontent.com/dct-dula/database/refs/heads/main/error.png',
   API_YTMP3_URL: 'https://ytmp3-download-api.vercel.app',
-  BUTTON_IMAGES: { ALIVE: 'https://i.ibb.co/Xf97VRG6/2c8d51c08f75.jpg' },
+  BUTTON_IMAGES: { ALIVE: 'https://i.ibb.co/Vpj24QHm/3c437e4b47bb.jpg' },
   
   // Default settings
   DEFAULT_SETTINGS: {
@@ -1550,7 +1550,7 @@ break;
             } catch (e) { console.warn('menu: config load failed', e); }
 
             const VIDEO_INTRO = 'https://files.catbox.moe/ihyzsf.mp4';
-            const MENU_IMG = "https://i.ibb.co/Xf97VRG6/2c8d51c08f75.jpg";
+            const MENU_IMG = "https://i.ibb.co/Vpj24QHm/3c437e4b47bb.jpg";
             const OWNER_NAME = '☠ 𝙼𝙰𝙳𝚄𝚂𝙰𝙽𝙺𝙰, ᴅᴄᴛ ᴅᴜʟᴀ ᴅᴇᴠ </> ☠︎︎�';
             const BOT_NAME = userCfg.botName || '© ༺ ALONE X MD MOVIE BOT༻ 🎬 ||🍃';
             
